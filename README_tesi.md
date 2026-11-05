@@ -161,12 +161,13 @@ res, ev, info = mcts(df, attrs, "fp", "bool", min_support=0.05, time_budget=5)
 
 ## Lavorare sul repository
 
-Si lavora sul ramo `dev` e si porta tutto su `main` alla fine:
+Si lavora sul ramo `jacopo` e si porta tutto su `main` alla fine:
 
 ```
-git checkout dev                    # lavoro
+git checkout jacopo                 # lavoro
 git add . && git commit -m "..." && git push
-git checkout main && git merge dev && git push   # alla fine
+git checkout main && git merge jacopo && git push   # alla fine
+git checkout jacopo
 ```
 
 ## Riferimenti
