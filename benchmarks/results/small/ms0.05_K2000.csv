@@ -1,0 +1,17 @@
+dataset,algoritmo,tempo_s,frequenti,frequenti_su,importanti,importanti_su,recall_%,top10_%,falsi,max_diff_div,note
+compas_fpr,DivExplorer,0.0468196670008183,315,315,10,10,100.0,100.0,0,0.0,
+compas_fpr,Random rows,0.9708559160008008,315,315,10,10,100.0,100.0,0,0.0,"campioni=2031, frequenti=315, fermato_da=pazienza"
+compas_fpr,Beam search,0.04502700000011828,315,315,10,10,100.0,100.0,0,0.0,"valutazioni=1661, frequenti=315, fermato_da=riserva vuota"
+compas_fpr,MCTS,0.9727536250011326,315,315,10,10,100.0,100.0,0,0.0,"iterazioni=80983, valutazioni=1661, frequenti=315, fermato_da=tempo"
+compas_fnr,DivExplorer,0.0440511670003616,315,315,36,36,100.0,100.0,0,0.0,
+compas_fnr,Random rows,0.9871629579993169,315,315,36,36,100.0,100.0,0,0.0,"campioni=2082, frequenti=315, fermato_da=pazienza"
+compas_fnr,Beam search,0.0454267080003774,315,315,36,36,100.0,100.0,0,0.0,"valutazioni=1661, frequenti=315, fermato_da=riserva vuota"
+compas_fnr,MCTS,0.9888204999988375,315,315,36,36,100.0,100.0,0,0.0,"iterazioni=77334, valutazioni=1661, frequenti=315, fermato_da=tempo"
+census,DivExplorer,0.5262829170005716,44,44,33,33,100.0,100.0,0,0.0,
+census,Random rows,9.353019750000385,44,44,33,33,100.0,100.0,0,0.0,"campioni=2036, frequenti=44, fermato_da=pazienza"
+census,Beam search,0.9439904999999271,44,44,33,33,100.0,100.0,0,0.0,"valutazioni=2666, frequenti=44, fermato_da=riserva vuota"
+census,MCTS,9.353628709000986,44,44,33,33,100.0,100.0,0,0.0,"iterazioni=603798, valutazioni=2666, frequenti=44, fermato_da=tempo"
+synthetic_small,DivExplorer,0.6138234579993878,2084,2084,94,94,100.0,100.0,0,0.0,
+synthetic_small,Random rows,5.258047916999203,2084,2084,94,94,100.0,100.0,0,0.0,"campioni=2037, frequenti=2084, fermato_da=pazienza"
+synthetic_small,Beam search,1.358310707999408,2084,2084,94,94,100.0,100.0,0,0.0,"valutazioni=21955, frequenti=2084, fermato_da=riserva vuota"
+synthetic_small,MCTS,5.27061591599886,2073,2084,94,94,100.0,100.0,0,0.0,"iterazioni=212315, valutazioni=18977, frequenti=2073, fermato_da=tempo"
