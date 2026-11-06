@@ -3,7 +3,6 @@ Il file .md viene salvato accanto al CSV, nella stessa cartella.
 Uso:
   python3 benchmarks/make_table.py benchmarks/results/small/ms0.05_K2000.csv
   python3 benchmarks/make_table.py benchmarks/results/medium/ms0.05_K2000.csv
-  ...
 """
 import sys
 import pandas as pd
@@ -13,6 +12,7 @@ t = pd.DataFrame({
     "Dataset": df["dataset"],
     "Algoritmo": df["algoritmo"],
     "Tempo (s)": df["tempo_s"].round(2),
+    "Ultimo importante (s)": df["t_ultimo_s"].round(2),
     "Frequenti": df["frequenti"].astype(str) + "/" + df["frequenti_su"].astype(str),
     "Importanti": df["importanti"].astype(str) + "/" + df["importanti_su"].astype(str),
     "Recall T_min (%)": df["recall_%"].round(1),

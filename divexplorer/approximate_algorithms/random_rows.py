@@ -87,6 +87,7 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
     # memoria compatta: chiave intera -> posizione negli array delle statistiche
     index = {}
     cnt_a, w1_a, w2_a = array("d"), array("d"), array("d")
+    t_a = array("d")                                   # quando e' stato trovato
     samples, since_new, n_important = 0, 0, 0
     stopped_by = "pazienza"
     while since_new < K:
@@ -141,6 +142,7 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
                 cnt_a.append(S[c, 0])
                 w1_a.append(S[c, 1])
                 w2_a.append(S[c, 2])
+                t_a.append(time.perf_counter() - t0)
                 if imp[c]:
                     n_important += 1
                     since_new = 0
@@ -166,7 +168,8 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
     res = pd.DataFrame({"support": meas["support"], "itemset": itemsets,
                         outcome: meas["value"], f"{outcome}_div": meas["div"],
                         f"{outcome}_t": meas["t"],
-                        "length": [len(i) for i in itemsets]})
+                        "length": [len(i) for i in itemsets],
+                        "t_found": np.frombuffer(t_a, dtype=float)})
     info = {"tempo": time.perf_counter() - t0, "campioni": samples,
             "frequenti": n_frequent, "importanti_trovati": n_important,
             "fermato_da": stopped_by, "evaluation": evaluation}

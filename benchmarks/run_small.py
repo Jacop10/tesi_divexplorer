@@ -3,11 +3,14 @@
 Per ogni dataset:
   - DivExplorer calcola TUTTI i sottogruppi frequenti -> riferimento esatto;
   - T_min = sottogruppi frequenti, con t >= tau e non ridondanti;
-  - random rows si ferma con la pazienza K;
-  - beam search e MCTS ricevono lo STESSO tempo di random rows (budget uguale).
-Si stampa: tempo, sottogruppi frequenti trovati, recall su T_min, recall sui 10
-sottogruppi di T_min con |divergenza| piu' alta, e la massima differenza di
-divergenza rispetto a DivExplorer (deve essere ~0: i valori sono esatti).
+  - i tre algoritmi si fermano con la pazienza (K campioni / passi / iterazioni di
+    fila senza sottogruppi importanti nuovi); per beam e MCTS c'e' anche un limite
+    di tempo di sicurezza (default: 10 volte il tempo di random rows).
+Si stampa: tempo totale, tempo in cui e' stato trovato l'ULTIMO sottogruppo
+importante (t_ultimo_s: dopo, il metodo aspetta solo la pazienza), sottogruppi
+frequenti trovati, recall su T_min, recall sui 10 sottogruppi di T_min con
+|divergenza| piu' alta, e la massima differenza di divergenza rispetto a
+DivExplorer (deve essere ~0: i valori sono esatti).
 
 Esempi (dalla cartella principale del repository):
   python3 benchmarks/run_small.py
@@ -47,7 +50,11 @@ def compare(name, res, ev, info, ref, T_true, top10, outcome, tau, eps):
     ref_div = dict(zip(ref["itemset"], ref[f"{outcome}_div"]))
     diffs = [abs(d - ref_div[i]) for i, d in zip(res["itemset"], res[f"{outcome}_div"])
              if i in ref_div]
-    return {"algoritmo": name, "tempo_s": info["tempo"],
+    if "t_found" in res.columns:           # quando e' stato trovato l'ultimo importante
+        t_last = res.loc[res["itemset"].isin(T & T_true), "t_found"].max()
+    else:                                  # DivExplorer: tutto alla fine
+        t_last = info["tempo"]
+    return {"algoritmo": name, "tempo_s": info["tempo"], "t_ultimo_s": t_last,
             "frequenti": len(res), "frequenti_su": len(ref),
             "importanti": len(T & T_true), "importanti_su": len(T_true),
             "recall_%": 100 * len(T & T_true) / max(len(T_true), 1),
@@ -65,13 +72,16 @@ def main():
     p.add_argument("--tau", type=float, default=2.0, help="soglia sul t-value")
     p.add_argument("--eps", type=float, default=None,
                    help="soglia di ridondanza (default 0.05 booleani, 0.01*std numerici)")
-    p.add_argument("--K", type=int, default=2000, help="pazienza di random rows")
+    p.add_argument("--K", type=int, default=2000, help="pazienza di random rows (campioni)")
+    p.add_argument("--K-beam", type=int, default=200, help="pazienza della beam search (passi)")
+    p.add_argument("--K-mcts", type=int, default=5000, help="pazienza di MCTS (iterazioni)")
     p.add_argument("--m", type=int, default=10, help="attributi per campione")
     p.add_argument("--beam-width", type=int, default=10)
     p.add_argument("--theta", type=float, default=0.5, help="Jaccard massimo nel beam")
     p.add_argument("--ucb-c", type=float, default=2 ** 0.5)
     p.add_argument("--budget", type=float, default=None,
-                   help="secondi per beam e MCTS (default: tempo di random rows)")
+                   help="limite di sicurezza in secondi per beam e MCTS "
+                        "(default: 10 volte il tempo di random rows)")
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
 
@@ -102,22 +112,23 @@ def main():
                             outcome, args.tau, eps) | {"dataset": name})
         print(f"Random rows: {info['tempo']:.2f} s", flush=True)
 
-        budget = args.budget or info["tempo"]
-        res, ev, info = beam_search(df, attrs, outcome, kind, args.min_support,
-                                    beam_width=args.beam_width, theta=args.theta,
-                                    time_budget=budget)
+        budget = args.budget or 10 * info["tempo"]
+        res, ev, info = beam_search(df, attrs, outcome, kind, args.min_support, args.tau,
+                                    eps, beam_width=args.beam_width, theta=args.theta,
+                                    K=args.K_beam, time_budget=budget)
         rows.append(compare("Beam search", res, ev, info, ref, T_true, top10,
                             outcome, args.tau, eps) | {"dataset": name})
         print(f"Beam search: {info['tempo']:.2f} s", flush=True)
 
-        res, ev, info = mcts(df, attrs, outcome, kind, args.min_support, args.tau,
-                             c=args.ucb_c, time_budget=budget, seed=args.seed)
+        res, ev, info = mcts(df, attrs, outcome, kind, args.min_support, args.tau, eps,
+                             c=args.ucb_c, K=args.K_mcts, time_budget=budget,
+                             seed=args.seed)
         rows.append(compare("MCTS", res, ev, info, ref, T_true, top10,
                             outcome, args.tau, eps) | {"dataset": name})
         print(f"MCTS:        {info['tempo']:.2f} s", flush=True)
 
     table = pd.DataFrame(rows)
-    cols = ["dataset", "algoritmo", "tempo_s", "frequenti", "frequenti_su", "importanti",
+    cols = ["dataset", "algoritmo", "tempo_s", "t_ultimo_s", "frequenti", "frequenti_su", "importanti",
             "importanti_su", "recall_%", "top10_%", "falsi", "max_diff_div", "note"]
     table = table[cols]
     pd.set_option("display.width", 250)

@@ -6,7 +6,8 @@
 - measures: da (righe, w1, w2) a supporto, outcome, divergenza e t-value.
 - to_dataframe: risultato nel formato di DivExplorer.
 - important_itemsets: sottogruppi significativi (t >= tau) e non ridondanti
-  (redundancy pruning di DivExplorer, soglia eps).
+  (redundancy pruning di DivExplorer, soglia eps);
+- is_important: la stessa regola per un solo sottogruppo, durante la ricerca.
 
 Notazione per le statistiche di un sottogruppo, s = (righe, w1, w2):
 - outcome booleano: w1 = righe con outcome 1, w2 = righe con outcome 0;
@@ -95,16 +96,35 @@ def measures(s, root, n, kind):
     return {"support": cnt / n, "value": value, "div": value - value0, "t": t}
 
 
-def to_dataframe(ev, found):
-    """found = {frozenset di item: (righe, w1, w2)} -> DataFrame come DivExplorer."""
+def to_dataframe(ev, found, found_at=None):
+    """found = {frozenset di item: (righe, w1, w2)} -> DataFrame come DivExplorer.
+    found_at = {frozenset di item: secondi dall'inizio} -> colonna t_found."""
     o = ev.outcome
     rows = []
     for itemset, s in found.items():
         m = ev.measures(s)
         rows.append({"support": m["support"], "itemset": ev.names(itemset),
                      o: m["value"], f"{o}_div": m["div"], f"{o}_t": m["t"],
-                     "length": len(itemset)})
-    return pd.DataFrame(rows, columns=["support", "itemset", o, f"{o}_div", f"{o}_t", "length"])
+                     "length": len(itemset),
+                     "t_found": found_at[itemset] if found_at else float("nan")})
+    return pd.DataFrame(rows, columns=["support", "itemset", o, f"{o}_div", f"{o}_t",
+                                       "length", "t_found"])
+
+
+def is_important(ev, itemset, tau, eps):
+    """Un sottogruppo (frozenset di indici) e' importante se ha t >= tau e non e'
+    ridondante: togliendo qualsiasi item la divergenza cambia di piu' di eps
+    (divergenza dell'insieme vuoto = 0). Come important_itemsets, ma per un solo
+    sottogruppo, durante la ricerca (beam search, MCTS)."""
+    m = ev.measures(ev.stats(itemset))
+    if not m["t"] >= tau:
+        return False
+    for i in itemset:
+        sub = itemset - {i}
+        d_sub = ev.measures(ev.stats(sub))["div"] if sub else 0.0
+        if abs(m["div"] - d_sub) <= eps:
+            return False
+    return True
 
 
 def important_itemsets(df, outcome, tau, eps, ev=None):

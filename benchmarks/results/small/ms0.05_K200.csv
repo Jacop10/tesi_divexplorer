@@ -1,0 +1,17 @@
+dataset,algoritmo,tempo_s,t_ultimo_s,frequenti,frequenti_su,importanti,importanti_su,recall_%,top10_%,falsi,max_diff_div,note
+compas_fpr,DivExplorer,0.04687495799953467,0.04687495799953467,315,315,10,10,100.0,100.0,0,0.0,
+compas_fpr,Random rows,0.05026437500055181,0.014941542000087793,315,315,10,10,100.0,100.0,0,0.0,"campioni=259, frequenti=315, importanti_trovati=10, fermato_da=pazienza, evaluation=matrix"
+compas_fpr,Beam search,0.050394957999742473,0.0082183750000695,315,315,10,10,100.0,100.0,0,0.0,"passi=46, valutazioni=1661, frequenti=315, riserva=0, fermato_da=riserva vuota"
+compas_fpr,MCTS,0.11883341700013261,0.015384333000838524,315,315,10,10,100.0,100.0,0,0.0,"iterazioni=5159, valutazioni=1633, frequenti=315, fermato_da=pazienza"
+compas_fnr,DivExplorer,0.04691408299913746,0.04691408299913746,315,315,36,36,100.0,100.0,0,0.0,
+compas_fnr,Random rows,0.055439457999455044,0.02099854199877882,315,315,36,36,100.0,100.0,0,0.0,"campioni=302, frequenti=315, importanti_trovati=36, fermato_da=pazienza, evaluation=matrix"
+compas_fnr,Beam search,0.05116816699955962,0.03250070799913374,315,315,36,36,100.0,100.0,0,0.0,"passi=50, valutazioni=1661, frequenti=315, riserva=0, fermato_da=riserva vuota"
+compas_fnr,MCTS,0.12520666599994001,0.042816290999326156,315,315,36,36,100.0,100.0,0,0.0,"iterazioni=5840, valutazioni=1644, frequenti=315, fermato_da=pazienza"
+census,DivExplorer,0.5143251669996971,0.5143251669996971,44,44,33,33,100.0,100.0,0,0.0,
+census,Random rows,0.49873145800120255,0.11090279200107034,44,44,33,33,100.0,100.0,0,0.0,"campioni=226, frequenti=44, importanti_trovati=33, fermato_da=pazienza, evaluation=matrix"
+census,Beam search,0.9257322499997827,0.6862655839995568,44,44,33,33,100.0,100.0,0,0.0,"passi=6, valutazioni=2666, frequenti=44, riserva=0, fermato_da=riserva vuota"
+census,MCTS,0.9831290419988363,0.29136537500016857,44,44,33,33,100.0,100.0,0,0.0,"iterazioni=5052, valutazioni=2666, frequenti=44, fermato_da=pazienza"
+synthetic_small,DivExplorer,0.5867367499995453,0.5867367499995453,2084,2084,94,94,100.0,100.0,0,0.0,
+synthetic_small,Random rows,0.17938212499939254,0.04128037500049686,2084,2084,94,94,100.0,100.0,0,0.0,"campioni=236, frequenti=2084, importanti_trovati=94, fermato_da=pazienza, evaluation=matrix"
+synthetic_small,Beam search,1.4293064580015198,1.1553555830014375,2084,2084,94,94,100.0,100.0,0,0.0,"passi=253, valutazioni=21955, frequenti=2084, riserva=0, fermato_da=riserva vuota"
+synthetic_small,MCTS,1.400020166000104,1.1953353750013775,1980,2084,94,94,100.0,100.0,0,0.0,"iterazioni=23897, valutazioni=13989, frequenti=1980, fermato_da=pazienza"
