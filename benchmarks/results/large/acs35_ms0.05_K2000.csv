@@ -1,0 +1,4 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A35,Random rows,unione,389.13313795799877,360.5291267909997,8.971893310546875,9088965,7174,7174,100.0,100.0,,"campioni=149494, frequenti=9088965, importanti_trovati=7174, fermato_da=pazienza, evaluation=matrix"
+acs_A35,Beam search,unione,19.129445541999303,2.831833333999384,0.195770263671875,2556,194,7174,2.7042096459436857,10.0,,"passi=219, valutazioni=66561, frequenti=2556, riserva=1822, fermato_da=pazienza"
+acs_A35,MCTS,unione,34.26486862499951,28.362766250000277,0.242706298828125,14935,626,7174,8.725954836911068,60.0,,"iterazioni=25213, valutazioni=125314, frequenti=14935, fermato_da=pazienza"

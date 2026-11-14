@@ -1,0 +1,9 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+synthetic_A25,DivExplorer,DivExplorer,256.76190595800017,256.76190595800017,0.88330078125,127456,114,114,100.0,100.0,0,
+synthetic_A25,Random rows,DivExplorer,6.282437208000374,3.82925858300041,0.2630615234375,116515,114,114,100.0,100.0,0,"campioni=5158, frequenti=116515, importanti_trovati=114, fermato_da=pazienza, evaluation=matrix"
+synthetic_A25,Beam search,DivExplorer,14.577632458000153,0.16847370799951022,0.24005126953125,3977,38,114,33.333333333333336,0.0,0,"passi=201, valutazioni=107820, frequenti=3977, riserva=1974, fermato_da=pazienza"
+synthetic_A25,MCTS,DivExplorer,9.426152250000086,8.497395833000155,0.20123291015625,8330,63,114,55.26315789473684,0.0,0,"iterazioni=16423, valutazioni=59390, frequenti=8330, fermato_da=pazienza"
+acs_A25,DivExplorer,DivExplorer,66.53859779100003,66.53859779100003,5.800079345703125,4275614,2673,2673,100.0,100.0,0,
+acs_A25,Random rows,DivExplorer,50.65538254100011,44.8780489159999,0.996063232421875,829974,2660,2673,99.51365506921063,100.0,0,"campioni=22690, frequenti=829974, importanti_trovati=2660, fermato_da=pazienza, evaluation=matrix"
+acs_A25,Beam search,DivExplorer,30.511551457999303,20.78551937499924,0.216033935546875,2870,171,2673,6.397306397306397,100.0,0,"passi=473, valutazioni=111828, frequenti=2870, riserva=1259, fermato_da=pazienza"
+acs_A25,MCTS,DivExplorer,16.32219641699976,11.304331874999662,0.179962158203125,5496,417,2673,15.600448933782268,50.0,0,"iterazioni=12718, valutazioni=64055, frequenti=5496, fermato_da=pazienza"
