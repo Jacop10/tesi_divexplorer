@@ -24,7 +24,7 @@ import time
 
 import pandas as pd
 
-from compare import HERE, add_args, run_divexplorer
+from compare import HERE, add_args, result_name, run_divexplorer
 
 METHODS = ["DivExplorer", "Random rows", "Beam search", "MCTS"]
 KEY = {"random": "Random rows", "beam": "Beam search", "mcts": "MCTS"}
@@ -190,7 +190,6 @@ def main(group, loaders, doc):
                                    for r in table.itertuples() if isinstance(r.note, str)))
     out_dir = os.path.join(HERE, "results", group)
     os.makedirs(out_dir, exist_ok=True)
-    tag = "-".join(args.datasets)
-    out = os.path.join(out_dir, f"{tag}_ms{args.min_support}_K{args.K}.csv")
+    out = os.path.join(out_dir, result_name(args, "_noDX" if args.skip_divexplorer else ""))
     table.to_csv(out, index=False)
     print(f"\nSalvato in {out}")

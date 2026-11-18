@@ -136,6 +136,22 @@ def run_dataset(df, attrs, outcome, kind, name, args):
     return rows
 
 
+def result_name(args, extra=""):
+    """Nome del file dei risultati con tutto quello che distingue una prova:
+    dataset, supporto, pazienza, eps, tau, m, e gli algoritmi se non sono tutti.
+    Esempio: acs20-airbnb_ms0.05_K2000_eps-auto_tau2.0_m10.csv"""
+    parts = ["-".join(args.datasets), f"ms{args.min_support}", f"K{args.K}",
+             f"eps-{args.eps if args.eps is not None else 'auto'}", f"tau{args.tau}",
+             f"m{args.m}"]
+    if sorted(args.algorithms) != sorted(ALGORITHMS):
+        parts.append("solo-" + "-".join(args.algorithms))
+    if getattr(args, "output", "important") != "important":
+        parts.append(f"output-{args.output}")
+    if args.evaluation != "matrix":
+        parts.append(args.evaluation)
+    return "_".join(parts) + extra + ".csv"
+
+
 def main(group, loaders, doc):
     """group = nome della cartella dei risultati (small, medium, ...)."""
     p = argparse.ArgumentParser(description=doc,
@@ -159,6 +175,6 @@ def main(group, loaders, doc):
                                    for r in table.itertuples() if r.algoritmo != "DivExplorer"))
     out_dir = os.path.join(HERE, "results", group)
     os.makedirs(out_dir, exist_ok=True)
-    out = os.path.join(out_dir, f"ms{args.min_support}_K{args.K}.csv")
+    out = os.path.join(out_dir, result_name(args))
     table.to_csv(out, index=False)
     print(f"\nSalvato in {out}")

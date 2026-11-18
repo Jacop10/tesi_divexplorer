@@ -2,6 +2,8 @@
 
 - synthetic15, synthetic20: lo stesso generatore di datasets_small (attributi con 3
   valori, due gruppi nascosti con piu' falsi positivi), 50.000 righe;
+- airbnb: annunci Airbnb di New York (24 attributi, outcome numerico: voto delle
+  recensioni), vedi datasets_airbnb.py;
 - acs15, acs20: censimento USA (California 2018, 100.000 adulti) con un random
   forest; outcome = falsi positivi (FPR). Serve datasets_acs.py e
   pip install folktables scikit-learn. La prima volta scarica i dati (qualche
@@ -9,6 +11,7 @@
 
 Ogni loader restituisce (df, attributi, outcome, tipo, nome).
 """
+from datasets_airbnb import airbnb
 from datasets_small import synthetic
 
 
@@ -28,4 +31,5 @@ LOADERS = {
     "synthetic20": lambda: synthetic_medium(20),
     "acs15": lambda: acs(15),
     "acs20": lambda: acs(20),
+    "airbnb": airbnb,
 }
