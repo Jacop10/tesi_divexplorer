@@ -162,3 +162,4 @@ cython_debug/
 # Custom
 .vscode
 benchmarks/data_cache/
+datasets/census_kdd/

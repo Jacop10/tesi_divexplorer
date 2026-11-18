@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+census_kdd_A25,DivExplorer,DivExplorer,38.588419832999534,38.588419832999534,5.9448089599609375,3357935.0,363,363,100.0,100.0,0,
+census_kdd_A25,Random rows,DivExplorer,20.906339207999736,12.978534832999685,0.2619171142578125,,363,363,100.0,100.0,0,"campioni=5260, frequenti=None, importanti_trovati=363, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A25,Beam search,DivExplorer,56.16015116699964,32.19577012500031,0.2835693359375,2202.0,130,363,35.81267217630854,60.0,0,"passi=349, valutazioni=97507, frequenti=2202, riserva=1353, fermato_da=pazienza"
+census_kdd_A25,MCTS,DivExplorer,74.56036499999936,71.72661766700003,0.3050384521484375,6878.0,231,363,63.63636363636363,60.0,0,"iterazioni=24568, valutazioni=142710, frequenti=6878, fermato_da=pazienza"

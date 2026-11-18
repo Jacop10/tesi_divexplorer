@@ -1,0 +1,4 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+census_kdd_A37,Random rows,unione,53.2524334159998,44.003485125000225,0.33331298828125,,351,351,100.0,100.0,,"campioni=11415, frequenti=None, importanti_trovati=351, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A37,Beam search,unione,100.29155133299992,35.79104762499992,0.396209716796875,2262.0,104,351,29.62962962962963,60.0,,"passi=275, valutazioni=183125, frequenti=2262, riserva=1164, fermato_da=pazienza"
+census_kdd_A37,MCTS,unione,124.37142945800042,106.95365737500015,0.4071807861328125,16658.0,190,351,54.13105413105413,60.0,,"iterazioni=27543, valutazioni=229075, frequenti=16658, fermato_da=pazienza"
