@@ -50,6 +50,7 @@ def _run_method(method, df, attrs, outcome, kind, p):
     elif method == "Random rows":
         res, ev, info = random_rows(df, attrs, outcome, kind, p["min_support"], p["tau"],
                                     p["eps"], m=p["m"], K=p["K"], evaluation=p["evaluation"],
+                                    output=p["output"],
                                     seed=p["seed"])
     elif method == "Beam search":
         res, ev, info = beam_search(df, attrs, outcome, kind, p["min_support"], p["tau"],
@@ -59,11 +60,15 @@ def _run_method(method, df, attrs, outcome, kind, p):
         res, ev, info = mcts(df, attrs, outcome, kind, p["min_support"], p["tau"], p["eps"],
                              c=p["ucb_c"], K=p["K_mcts"], time_budget=p["budget"],
                              seed=p["seed"])
-    T = important_itemsets(res, outcome, p["tau"], p["eps"], ev) if len(res) else set()
+    if info.get("output") == "important":  # random rows ha gia' tenuto solo gli importanti
+        T = set(res["itemset"])
+    else:
+        T = important_itemsets(res, outcome, p["tau"], p["eps"], ev) if len(res) else set()
     imp = res[res["itemset"].isin(T)]
     t_found = (dict(zip(imp["itemset"], imp["t_found"])) if "t_found" in imp.columns
                else {i: info["tempo"] for i in imp["itemset"]})
-    return {"tempo": info["tempo"], "frequenti": len(res),
+    return {"tempo": info["tempo"],
+            "frequenti": len(res) if info.get("output") != "important" else float("nan"),
             "div": dict(zip(imp["itemset"], imp[f"{outcome}_div"])), "t_found": t_found,
             "note": ", ".join(f"{k}={v}" for k, v in info.items() if k != "tempo")}
 
@@ -124,7 +129,7 @@ def main(group, loaders, doc):
               flush=True)
         params = {"min_support": args.min_support, "tau": args.tau, "eps": eps, "m": args.m,
                   "K": args.K, "K_beam": args.K_beam, "K_mcts": args.K_mcts,
-                  "evaluation": args.evaluation, "beam_width": args.beam_width,
+                  "evaluation": args.evaluation, "output": args.output, "beam_width": args.beam_width,
                   "theta": args.theta, "ucb_c": args.ucb_c, "seed": args.seed,
                   "budget": args.budget or 600.0}
         methods = ([] if args.skip_divexplorer else ["DivExplorer"]) + \

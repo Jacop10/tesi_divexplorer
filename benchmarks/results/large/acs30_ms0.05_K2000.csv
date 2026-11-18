@@ -1,5 +1,2 @@
 dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
-acs_A30,DivExplorer,unione,,,,,,,,,,"crash (codice -9, memoria esaurita?)"
-acs_A30,Random rows,unione,187.74988654200024,174.8480814579998,3.708587646484375,3392496.0,7210.0,7210.0,100.0,100.0,,"campioni=78618, frequenti=3392496, importanti_trovati=7210, fermato_da=pazienza, evaluation=matrix"
-acs_A30,Beam search,unione,14.603716583000278,2.584321958000146,0.199432373046875,2357.0,195.0,7210.0,2.7045769764216367,20.0,,"passi=217, valutazioni=51961, frequenti=2357, riserva=1702, fermato_da=pazienza"
-acs_A30,MCTS,unione,25.2720238339989,19.493064041998878,0.2084197998046875,9837.0,612.0,7210.0,8.488210818307905,40.0,,"iterazioni=19224, valutazioni=95452, frequenti=9837, fermato_da=pazienza"
+acs_A30,Random rows,unione,161.08834379199993,156.99610166699995,0.171539306640625,,7210,7210,100.0,100.0,,"campioni=78618, frequenti=None, importanti_trovati=7210, fermato_da=pazienza, evaluation=matrix, output=important"

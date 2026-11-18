@@ -42,7 +42,10 @@ def run_divexplorer(df, attrs, outcome, kind, min_support):
 
 
 def compare(name, res, ev, info, ref, T_true, top10, outcome, tau, eps):
-    T = important_itemsets(res, outcome, tau, eps, ev) if len(res) else set()
+    if info.get("output") == "important":  # random rows ha gia' tenuto solo gli importanti
+        T = set(res["itemset"])
+    else:
+        T = important_itemsets(res, outcome, tau, eps, ev) if len(res) else set()
     ref_div = dict(zip(ref["itemset"], ref[f"{outcome}_div"]))
     diffs = [abs(d - ref_div[i]) for i, d in zip(res["itemset"], res[f"{outcome}_div"])
              if i in ref_div]
@@ -51,7 +54,8 @@ def compare(name, res, ev, info, ref, T_true, top10, outcome, tau, eps):
     else:                                  # DivExplorer: tutto alla fine
         t_last = info["tempo"]
     return {"algoritmo": name, "tempo_s": info["tempo"], "t_ultimo_s": t_last,
-            "frequenti": len(res), "frequenti_su": len(ref),
+            "frequenti": len(res) if info.get("output") != "important" else float("nan"),
+            "frequenti_su": len(ref),
             "importanti": len(T & T_true), "importanti_su": len(T_true),
             "recall_%": 100 * len(T & T_true) / max(len(T_true), 1),
             "top10_%": 100 * len(T & top10) / max(len(top10), 1),
@@ -72,6 +76,9 @@ def add_args(p, loaders):
     p.add_argument("--K-beam", type=int, default=200, help="pazienza della beam search (passi)")
     p.add_argument("--K-mcts", type=int, default=5000, help="pazienza di MCTS (iterazioni)")
     p.add_argument("--m", type=int, default=10, help="attributi per campione")
+    p.add_argument("--output", default="important", choices=["important", "all"],
+                   help="random rows: salvare solo i sottogruppi importanti (poca memoria, "
+                        "default) o tutti i frequenti (come DivExplorer)")
     p.add_argument("--evaluation", default="matrix", choices=["matrix", "zeta"],
                    help="random rows: matrice compatta (baseline) o zeta transform")
     p.add_argument("--beam-width", type=int, default=10)
@@ -112,6 +119,7 @@ def run_dataset(df, attrs, outcome, kind, name, args):
     if "random" in args.algorithms:
         res, ev, info = random_rows(df, attrs, outcome, kind, args.min_support, args.tau,
                                     eps, m=args.m, K=args.K, evaluation=args.evaluation,
+                                    output=args.output,
                                     seed=args.seed)
         add("Random rows", res, ev, info)
         budget = args.budget or 10 * info["tempo"]

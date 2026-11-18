@@ -25,6 +25,16 @@ evaluation:
 - "matrix" (default, baseline): S = Z^T H, costo O(4^m) per campione;
 - "zeta" (ottimizzazione): somma sui superinsiemi un item alla volta, O(m 2^m).
 I risultati sono identici.
+
+output:
+- "all" (default): si salvano TUTTI i sottogruppi frequenti trovati, come
+  DivExplorer. Serve per lo Shapley globale e per usare DivergencePatternProcessor
+  sul risultato. La memoria cresce con il numero di frequenti (milioni sui dataset
+  grandi);
+- "important": si salvano SOLO i sottogruppi importanti. Basta, perche' un
+  sottogruppo si riconosce come importante dentro il campione (ci sono tutti i suoi
+  sottoinsiemi) e la pazienza conta solo gli importanti nuovi. Risultati identici
+  sugli importanti, memoria molto piu' bassa; non si ha la lista dei frequenti.
 """
 import time
 from array import array
@@ -58,8 +68,9 @@ def superset_sum(H, m):
 
 def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
                 m=10, K=2000, max_samples=None, time_budget=None,
-                evaluation="matrix", seed=0, verbose=False):
+                evaluation="matrix", output="all", seed=0, verbose=False):
     assert evaluation in ("matrix", "zeta")
+    assert output in ("all", "important")
     t0 = time.perf_counter()
     rng = np.random.default_rng(seed)
     ev = Evaluator(df, attributes, outcome, kind)
@@ -85,6 +96,7 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
         samplers[d] = (rows, cdf / cdf[-1])
 
     # memoria compatta: chiave intera -> posizione negli array delle statistiche
+    # (output="all": tutti i frequenti; output="important": solo gli importanti)
     index = {}
     cnt_a, w1_a, w2_a = array("d"), array("d"), array("d")
     t_a = array("d")                                   # quando e' stato trovato
@@ -129,14 +141,28 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
             nonred &= ~has | (np.abs(div - div[codes ^ (1 << j)]) > eps)
         imp = freq & (np.nan_to_num(meas["t"]) >= tau) & nonred
 
-        # chiavi: si scorrono i codici in ordine crescente, cosi' c senza il suo bit
-        # piu' basso (un sottoinsieme, quindi anch'esso frequente) e' gia' calcolato
         bits = [1 << it for it in items]
-        keys = [0] * (2 ** mm)
-        for c in np.nonzero(freq)[0].tolist():
-            low = c & -c
-            k = keys[c ^ low] | bits[low.bit_length() - 1]
-            keys[c] = k
+        if output == "all":
+            # chiavi: si scorrono i codici in ordine crescente, cosi' c senza il suo
+            # bit piu' basso (un sottoinsieme, quindi anch'esso frequente) e' gia'
+            # calcolato
+            keys = [0] * (2 ** mm)
+            todo = []
+            for c in np.nonzero(freq)[0].tolist():
+                low = c & -c
+                keys[c] = keys[c ^ low] | bits[low.bit_length() - 1]
+                todo.append((c, keys[c]))
+        else:
+            # solo gli importanti: la chiave si costruisce bit per bit (al massimo m)
+            todo = []
+            for c in np.nonzero(imp)[0].tolist():
+                k, cc = 0, c
+                while cc:
+                    low = cc & -cc
+                    k |= bits[low.bit_length() - 1]
+                    cc ^= low
+                todo.append((c, k))
+        for c, k in todo:
             if k not in index:
                 index[k] = len(cnt_a)
                 cnt_a.append(S[c, 0])
@@ -147,7 +173,7 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
                     n_important += 1
                     since_new = 0
         if verbose and samples % 500 == 0:
-            print(f"  {samples} campioni, {len(index)} frequenti, "
+            print(f"  {samples} campioni, {len(index)} sottogruppi salvati, "
                   f"{time.perf_counter() - t0:.1f}s", flush=True)
 
     # output nel formato di DivExplorer
@@ -171,6 +197,7 @@ def random_rows(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
                         "length": [len(i) for i in itemsets],
                         "t_found": np.frombuffer(t_a, dtype=float)})
     info = {"tempo": time.perf_counter() - t0, "campioni": samples,
-            "frequenti": n_frequent, "importanti_trovati": n_important,
-            "fermato_da": stopped_by, "evaluation": evaluation}
+            "frequenti": n_frequent if output == "all" else None,
+            "importanti_trovati": n_important,
+            "fermato_da": stopped_by, "evaluation": evaluation, "output": output}
     return res, ev, info

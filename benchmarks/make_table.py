@@ -31,7 +31,7 @@ columns = {
     "Tempo (s)": num("tempo_s"),
     "Ultimo importante (s)": num("t_ultimo_s"),
     "Memoria (GB)": num("mem_GB"),
-    "Frequenti": ratio("frequenti", "frequenti_su"),
+    #"Frequenti": ratio("frequenti", "frequenti_su"),
     "Importanti": ratio("importanti", "importanti_su"),
     "Recall T_min (%)": num("recall_%", 1),
     "Top-10 (%)": num("top10_%", 1),
