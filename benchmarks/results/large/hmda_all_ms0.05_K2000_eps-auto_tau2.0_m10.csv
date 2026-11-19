@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+hmda_NY2022_Aall,DivExplorer,unione,,,,,,,,,,"crash (codice -9, memoria esaurita?)"
+hmda_NY2022_Aall,Random rows,unione,87.8254133749997,70.95595983299972,0.8242340087890625,,273.0,273.0,100.0,100.0,,"campioni=10118, frequenti=None, importanti_trovati=273, fermato_da=pazienza, evaluation=matrix, output=important"
+hmda_NY2022_Aall,Beam search,unione,,,,,,,,,,KeyError: 'alpha'
+hmda_NY2022_Aall,MCTS,unione,489.18299458399997,435.8661609999999,0.9117279052734375,98710.0,258.0,273.0,94.50549450549451,100.0,,"iterazioni=33755, valutazioni=488003, nodi=25421, frequenti=98710, fermato_da=pazienza"

@@ -9,6 +9,13 @@
   (redundancy pruning di DivExplorer, soglia eps);
 - is_important: la stessa regola per un solo sottogruppo, durante la ricerca.
 
+Valutazione veloce (beam search e MCTS):
+- Evaluator.extensions: statistiche di TUTTE le estensioni di un sottogruppo (il
+  sottogruppo piu' una condizione) con un solo passaggio sulle SUE righe: per ogni
+  attributo non usato si contano le righe per valore (stesso principio della
+  matrice compatta di random rows). Prima ogni estensione scorreva tutte le righe
+  del dataset.
+
 Notazione per le statistiche di un sottogruppo, s = (righe, w1, w2):
 - outcome booleano: w1 = righe con outcome 1, w2 = righe con outcome 0;
 - outcome numerico: w1 = somma dei valori, w2 = somma dei quadrati.
@@ -35,6 +42,10 @@ class Evaluator:
                 self.item_attr.append(ai)
                 self.masks.append(codes == k)
         self.item_id = {name: i for i, name in enumerate(self.items)}
+        # item di ogni riga per ogni attributo (-1 se il valore manca)
+        self.row_items = -np.ones((self.n, len(self.attributes)), dtype=np.int64)
+        for i, (a, mk) in enumerate(zip(self.item_attr, self.masks)):
+            self.row_items[mk, a] = i
 
         y = df[outcome].to_numpy(dtype=float)
         if kind == "bool":
@@ -64,6 +75,38 @@ class Evaluator:
             self.cache[itemset] = s
             self.evaluations += 1
         return s
+
+    def rows(self, itemset):
+        """Indici delle righe del sottogruppo."""
+        return np.flatnonzero(self.mask(itemset)) if itemset else np.arange(self.n)
+
+    def extensions(self, itemset, rows=None):
+        """Statistiche di tutte le estensioni di `itemset` con un item di un attributo
+        non ancora usato, calcolate con un solo passaggio sulle righe del sottogruppo.
+        Restituisce {item: (righe, w1, w2)} e salva tutto nella cache."""
+        if rows is None:
+            rows = self.rows(itemset)
+        used = {self.item_attr[i] for i in itemset}
+        free = [a for a in range(len(self.attributes)) if a not in used]
+        if not free or len(rows) == 0:
+            return {}
+        n_items = len(self.items)
+        Wr = self.W[rows]
+        S = np.zeros((n_items, 3))
+        for a in free:                      # un conteggio per attributo
+            codes = self.row_items[rows, a]
+            ok = codes >= 0
+            c = codes[ok]
+            for k in range(3):
+                S[:, k] += np.bincount(c, weights=Wr[ok, k], minlength=n_items)
+        out = {}
+        for i in np.flatnonzero(S[:, 0] > 0):
+            J = itemset | {int(i)}
+            if J not in self.cache:
+                self.cache[J] = S[i]
+                self.evaluations += 1
+            out[int(i)] = self.cache[J]
+        return out
 
     def measures(self, s):
         return measures(s, self.root, self.n, self.kind)

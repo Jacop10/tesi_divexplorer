@@ -54,7 +54,7 @@ def _run_method(method, df, attrs, outcome, kind, p):
                                     seed=p["seed"])
     elif method == "Beam search":
         res, ev, info = beam_search(df, attrs, outcome, kind, p["min_support"], p["tau"],
-                                    p["eps"], beam_width=p["beam_width"], theta=p["theta"],
+                                    p["eps"], beam_width=p["beam_width"], alpha=p["alpha"],
                                     K=p["K_beam"], time_budget=p["budget"])
     else:
         res, ev, info = mcts(df, attrs, outcome, kind, p["min_support"], p["tau"], p["eps"],
@@ -130,7 +130,7 @@ def main(group, loaders, doc):
         params = {"min_support": args.min_support, "tau": args.tau, "eps": eps, "m": args.m,
                   "K": args.K, "K_beam": args.K_beam, "K_mcts": args.K_mcts,
                   "evaluation": args.evaluation, "output": args.output, "beam_width": args.beam_width,
-                  "theta": args.theta, "ucb_c": args.ucb_c, "seed": args.seed,
+                  "alpha": args.alpha, "ucb_c": args.ucb_c, "seed": args.seed,
                   "budget": args.budget or 600.0}
         methods = ([] if args.skip_divexplorer else ["DivExplorer"]) + \
                   [KEY[a] for a in ["random", "beam", "mcts"] if a in args.algorithms]

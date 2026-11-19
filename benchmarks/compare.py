@@ -82,7 +82,8 @@ def add_args(p, loaders):
     p.add_argument("--evaluation", default="matrix", choices=["matrix", "zeta"],
                    help="random rows: matrice compatta (baseline) o zeta transform")
     p.add_argument("--beam-width", type=int, default=10)
-    p.add_argument("--theta", type=float, default=0.5, help="Jaccard massimo nel beam")
+    p.add_argument("--alpha", type=float, default=0.9,
+                   help="beam: peso delle righe gia' coperte nella diversita' DSSD")
     p.add_argument("--ucb-c", type=float, default=2 ** 0.5)
     p.add_argument("--budget", type=float, default=None,
                    help="limite di sicurezza in secondi per beam e MCTS "
@@ -125,7 +126,7 @@ def run_dataset(df, attrs, outcome, kind, name, args):
         budget = args.budget or 10 * info["tempo"]
     if "beam" in args.algorithms:
         res, ev, info = beam_search(df, attrs, outcome, kind, args.min_support, args.tau,
-                                    eps, beam_width=args.beam_width, theta=args.theta,
+                                    eps, beam_width=args.beam_width, alpha=args.alpha,
                                     K=args.K_beam, time_budget=budget)
         add("Beam search", res, ev, info)
     if "mcts" in args.algorithms:

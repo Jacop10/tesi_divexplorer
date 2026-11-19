@@ -163,3 +163,5 @@ cython_debug/
 .vscode
 benchmarks/data_cache/
 datasets/census_kdd/
+datasets/diabetes/
+datasets/hmda/

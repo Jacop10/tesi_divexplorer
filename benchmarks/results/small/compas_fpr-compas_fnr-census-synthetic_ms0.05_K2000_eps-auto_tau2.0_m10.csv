@@ -1,0 +1,17 @@
+dataset,algoritmo,tempo_s,t_ultimo_s,frequenti,frequenti_su,importanti,importanti_su,recall_%,top10_%,falsi,max_diff_div,note
+compas_fpr,DivExplorer,0.046928000000661996,0.046928000000661996,315.0,315,10,10,100.0,100.0,0,0.0,
+compas_fpr,Random rows,0.3337935829995331,0.01429691700013791,,315,10,10,100.0,100.0,0,0.0,"campioni=2059, frequenti=None, importanti_trovati=10, fermato_da=pazienza, evaluation=matrix, output=important"
+compas_fpr,Beam search,0.08764345799954754,0.014181957999426231,315.0,315,10,10,100.0,100.0,0,0.0,"passi=39, valutazioni=1619, frequenti=315, riserva=0, fermato_da=riserva vuota"
+compas_fpr,MCTS,0.10201537500051927,0.021866709000278206,315.0,315,10,10,100.0,100.0,0,0.0,"iterazioni=1127, valutazioni=1619, nodi=316, frequenti=315, fermato_da=albero esaurito"
+compas_fnr,DivExplorer,0.0435886670002219,0.0435886670002219,315.0,315,36,36,100.0,100.0,0,0.0,
+compas_fnr,Random rows,0.33934675000000425,0.02080562499941152,,315,36,36,100.0,100.0,0,0.0,"campioni=2102, frequenti=None, importanti_trovati=36, fermato_da=pazienza, evaluation=matrix, output=important"
+compas_fnr,Beam search,0.08550262499920791,0.050200916999529,315.0,315,36,36,100.0,100.0,0,0.0,"passi=40, valutazioni=1619, frequenti=315, riserva=0, fermato_da=riserva vuota"
+compas_fnr,MCTS,0.1036201249999067,0.03708220800035633,315.0,315,36,36,100.0,100.0,0,0.0,"iterazioni=1124, valutazioni=1619, nodi=316, frequenti=315, fermato_da=albero esaurito"
+census,DivExplorer,0.5177608750000218,0.5177608750000218,44.0,44,33,33,100.0,100.0,0,0.0,
+census,Random rows,3.9325535419993685,0.1366918749999968,,44,33,33,100.0,100.0,0,0.0,"campioni=2026, frequenti=None, importanti_trovati=33, fermato_da=pazienza, evaluation=matrix, output=important"
+census,Beam search,0.15769641699989734,0.08045608300017193,44.0,44,33,33,100.0,100.0,0,0.0,"passi=4, valutazioni=2599, frequenti=44, riserva=0, fermato_da=riserva vuota"
+census,MCTS,0.1563841670003967,0.108233625000139,44.0,44,33,33,100.0,100.0,0,0.0,"iterazioni=104, valutazioni=2599, nodi=45, frequenti=44, fermato_da=albero esaurito"
+synthetic_small,DivExplorer,0.5166989589997684,0.5166989589997684,2084.0,2084,94,94,100.0,100.0,0,0.0,
+synthetic_small,Random rows,1.2636049169996113,0.039111707999836653,,2084,94,94,100.0,100.0,0,0.0,"campioni=2036, frequenti=None, importanti_trovati=94, fermato_da=pazienza, evaluation=matrix, output=important"
+synthetic_small,Beam search,2.6371518750001997,0.7541834590001599,2084.0,2084,94,94,100.0,100.0,0,0.0,"passi=255, valutazioni=21955, frequenti=2084, riserva=0, fermato_da=riserva vuota"
+synthetic_small,MCTS,1.5928718330005722,0.9727755410003738,2084.0,2084,94,94,100.0,100.0,0,0.0,"iterazioni=8943, valutazioni=21955, nodi=2085, frequenti=2084, fermato_da=albero esaurito"

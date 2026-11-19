@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A30,DivExplorer,DivExplorer,146.46801004200006,146.46801004200006,8.234512329101562,9323197.0,2798,2798,100.0,100.0,0,
+acs_A30,Random rows,DivExplorer,56.59716045799996,52.61335895799948,0.2028961181640625,,2790,2798,99.71408148677627,90.0,0,"campioni=27893, frequenti=None, importanti_trovati=2790, fermato_da=pazienza, evaluation=matrix, output=important"
+acs_A30,Beam search,DivExplorer,19.971354833000078,7.779702791000091,0.542022705078125,5465.0,261,2798,9.328091493924232,0.0,0,"passi=270, valutazioni=132184, frequenti=5465, riserva=3360, fermato_da=pazienza"
+acs_A30,MCTS,DivExplorer,335.9502252909997,327.5924059580002,1.234161376953125,136285.0,2744,2798,98.07005003573981,10.0,0,"iterazioni=109842, valutazioni=1383238, nodi=50601, frequenti=136285, fermato_da=pazienza"
