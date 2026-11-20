@@ -4,13 +4,15 @@
      (parametro exhaustive_levels, default 2);
   2. punteggio di un sottogruppo = |divergenza| se e' significativo (t >= tau),
      altrimenti 0;
-  3. dall'ultimo livello esaustivo in poi si scelgono w sottogruppi con punteggio alto
-     e DIVERSI tra loro, con la selezione "cover-based" di DSSD (van Leeuwen &
-     Knobbe, 2012): si sceglie ogni volta il sottogruppo con punteggio x peso piu'
-     alto, dove il peso e' la media sulle sue righe di alpha^c (c = quanti sottogruppi
-     gia' scelti coprono quella riga, alpha = 0.9). Le righe gia' coperte penalizzano
-     un candidato, ma non lo escludono. Gli altri vanno nella riserva (coda ordinata
-     per punteggio);
+  3. dall'ultimo livello esaustivo in poi si scelgono w sottogruppi DIVERSI tra loro,
+     dando la PRECEDENZA AGLI IMPORTANTI (l'obiettivo e' T_min): prima si scelgono gli
+     importanti, poi, se restano posti, gli altri. In ciascuno dei due gruppi la
+     scelta e' "cover-based" come in DSSD (van Leeuwen & Knobbe, 2012): si sceglie
+     ogni volta il sottogruppo con punteggio x peso piu' alto, dove il peso e' la
+     media sulle sue righe di alpha^c (c = quanti sottogruppi gia' scelti coprono
+     quella riga, alpha = 0.9). Le righe gia' coperte penalizzano un candidato, ma
+     non lo escludono. Gli altri vanno nella riserva (coda ordinata: prima gli
+     importanti, poi per punteggio);
   4. ogni sottogruppo scelto si estende di una condizione (attributi non usati);
   5. se un livello resta vuoto, si riparte dalla riserva con la STESSA regola di
      diversita' (i saltati restano nella riserva);
@@ -38,6 +40,7 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
     ev = Evaluator(df, attributes, outcome, kind)
     max_len = max_len or len(attributes)
     found, found_at, seen = {}, {}, set()
+    important = set()                        # sottogruppi importanti trovati
     reserve, tie = [], itertools.count()
     new_important = False                    # trovato un importante nel passo corrente?
     pool = 20 * beam_width                   # candidati considerati per la scelta
@@ -67,17 +70,23 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
             found_at[J] = time.perf_counter() - t0
             if is_important(ev, J, tau, eps):
                 new_important = True
+                important.add(J)
             out.append(J)
         return out
 
     # --- scelta di sottogruppi diversi -------------------------------------------
-    def pick(ranked):
+    def key(c):
+        """Ordine dei candidati: prima gli importanti, poi per punteggio."""
+        return (c in important, score(c))
+
+    def pick(ranked, width=None):
         """Selezione cover-based di DSSD sui primi `pool` candidati per punteggio.
         ranked: candidati in ordine di punteggio. Restituisce (presi, non presi).
         I pesi di tutti i candidati si aggiornano insieme con un prodotto
         matrice-vettore (matrice candidati x righe, sparsa)."""
+        width = beam_width if width is None else width
         head, tail = ranked[:pool], ranked[pool:]
-        if len(head) <= beam_width:
+        if len(head) <= width:
             return head, tail
         rows = [ev.rows(c) for c in head]
         sizes = np.array([max(len(r), 1) for r in rows], dtype=float)
@@ -89,7 +98,7 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
         counts = np.zeros(ev.n)
         free = np.ones(len(head), dtype=bool)
         chosen = []
-        for _ in range(beam_width):
+        for _ in range(width):
             weight = (M @ (alpha ** counts)) / sizes        # media di alpha^c sulle righe
             val = np.where(free, sc * weight, -1.0)
             j = int(np.argmax(val))
@@ -101,15 +110,24 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
         return beam, rest
 
     def select(candidates):
-        beam, rest = pick(sorted(candidates, key=score, reverse=True))
+        """Prima si scelgono gli importanti (DSSD), poi, nei posti rimasti, gli altri."""
+        ranked = sorted(candidates, key=key, reverse=True)
+        imp = [c for c in ranked if c in important]
+        other = [c for c in ranked if c not in important]
+        beam, rest = pick(imp)
+        if len(beam) < beam_width:
+            beam2, rest2 = pick(other, beam_width - len(beam))
+            beam, rest = beam + beam2, rest + rest2
+        else:
+            rest = rest + other
         for c in rest:
-            heapq.heappush(reserve, (-score(c), next(tie), c))
+            heapq.heappush(reserve, (-(c in important), -score(c), next(tie), c))
         return beam
 
     def from_reserve():
         """Ripartenza dalla riserva con la stessa regola di diversita': si prendono i
         primi della riserva, si sceglie, i non scelti tornano nella riserva."""
-        top = [heapq.heappop(reserve)[2] for _ in range(min(len(reserve), 50 * beam_width))]
+        top = [heapq.heappop(reserve)[-1] for _ in range(min(len(reserve), 50 * beam_width))]
         return select(top)
 
     # 1. livelli esaustivi
