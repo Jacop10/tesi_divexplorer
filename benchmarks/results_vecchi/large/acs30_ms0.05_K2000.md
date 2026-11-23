@@ -1,0 +1,6 @@
+| Dataset   | Algoritmo   | Riferimento   | Tempo (s)                            |   Ultimo importante (s) |   Memoria (GB) |   Frequenti | Importanti   |   Recall T_min (%) |   Top-10 (%) | Falsi   |
+|:----------|:------------|:--------------|:-------------------------------------|------------------------:|---------------:|------------:|:-------------|-------------------:|-------------:|:--------|
+| acs_A30   | DivExplorer | unione        | crash (codice -9, memoria esaurita?) |                         |                |             |              |                    |              |         |
+| acs_A30   | Random rows | unione        | 187.75                               |                  174.85 |           3.71 |     3392496 | 7210/7210    |              100   |          100 |         |
+| acs_A30   | Beam search | unione        | 14.6                                 |                    2.58 |           0.2  |        2357 | 195/7210     |                2.7 |           20 |         |
+| acs_A30   | MCTS        | unione        | 25.27                                |                   19.49 |           0.21 |        9837 | 612/7210     |                8.5 |           40 |         |

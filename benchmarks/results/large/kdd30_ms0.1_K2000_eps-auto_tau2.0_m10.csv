@@ -1,5 +1,5 @@
 dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
-census_kdd_A30,DivExplorer,DivExplorer,101.73805387499942,101.73805387499942,8.224533081054688,7938228.0,124,124,100.0,100.0,0,
-census_kdd_A30,Random rows,DivExplorer,11.86140370800058,3.6159889580003437,0.2953643798828125,,124,124,100.0,100.0,0,"campioni=2764, frequenti=None, importanti_trovati=124, fermato_da=pazienza, evaluation=matrix, output=important"
-census_kdd_A30,Beam search,DivExplorer,59.54340570800014,19.99347616599971,0.289703369140625,2137.0,72,124,58.064516129032256,80.0,0,"passi=253, valutazioni=105514, frequenti=2137, riserva=1422, fermato_da=pazienza"
-census_kdd_A30,MCTS,DivExplorer,117.1141749999997,101.35110745800012,0.3754119873046875,12365.0,116,124,93.54838709677419,100.0,0,"iterazioni=30151, valutazioni=212071, frequenti=12365, fermato_da=pazienza"
+census_kdd_A30,DivExplorer,DivExplorer,99.92928395800027,99.92928395800027,8.462570190429688,7938228.0,124,124,100.0,100.0,0,
+census_kdd_A30,Random rows,DivExplorer,12.02499404199989,3.7933152079995125,0.3896942138671875,,124,124,100.0,100.0,0,"campioni=2764, frequenti=None, importanti_trovati=124, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A30,Beam search,DivExplorer,18.912519666999287,3.539266208999834,0.66070556640625,6330.0,124,124,100.0,100.0,0,"passi=227, valutazioni=228625, frequenti=6330, riserva=4397, fermato_da=pazienza"
+census_kdd_A30,MCTS,DivExplorer,45.88266129099975,33.06798604100004,0.56878662109375,43182.0,124,124,100.0,100.0,0,"iterazioni=20883, valutazioni=478723, nodi=11661, frequenti=43182, fermato_da=pazienza"

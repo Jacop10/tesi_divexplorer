@@ -28,7 +28,6 @@ import itertools
 import time
 
 import numpy as np
-import scipy.sparse as sp
 
 from .common import Evaluator, is_important, to_dataframe
 
@@ -45,9 +44,14 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
     new_important = False                    # trovato un importante nel passo corrente?
     pool = 20 * beam_width                   # candidati considerati per la scelta
 
+    scores = {}                              # punteggi gia' calcolati
+
     def score(itemset):
-        m = ev.measures(found[itemset])
-        return abs(m["div"]) if m["t"] >= tau else 0.0
+        sc = scores.get(itemset)
+        if sc is None:
+            m = ev.measures(found[itemset])
+            sc = scores[itemset] = abs(m["div"]) if m["t"] >= tau else 0.0
+        return sc
 
     def over_budget():
         return ((time_budget is not None and time.perf_counter() - t0 > time_budget)
@@ -82,29 +86,41 @@ def beam_search(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05,
     def pick(ranked, width=None):
         """Selezione cover-based di DSSD sui primi `pool` candidati per punteggio.
         ranked: candidati in ordine di punteggio. Restituisce (presi, non presi).
-        I pesi di tutti i candidati si aggiornano insieme con un prodotto
-        matrice-vettore (matrice candidati x righe, sparsa)."""
+        Calcolo "pigro": il peso e' al massimo 1, quindi punteggio x peso <= punteggio.
+        Si scorrono i candidati in ordine di punteggio e ci si ferma appena il
+        punteggio non puo' piu' battere il migliore trovato: le righe (e il peso)
+        servono solo per i primi candidati. Stesso risultato del calcolo completo."""
         width = beam_width if width is None else width
         head, tail = ranked[:pool], ranked[pool:]
         if len(head) <= width:
             return head, tail
-        rows = [ev.rows(c) for c in head]
-        sizes = np.array([max(len(r), 1) for r in rows], dtype=float)
-        M = sp.csr_matrix((np.ones(sum(len(r) for r in rows)),
-                           np.concatenate(rows),
-                           np.concatenate([[0], np.cumsum([len(r) for r in rows])])),
-                          shape=(len(head), ev.n))
-        sc = np.array([score(c) for c in head])
-        counts = np.zeros(ev.n)
-        free = np.ones(len(head), dtype=bool)
+        sc = [score(c) for c in head]
+        rows = [None] * len(head)
+        counts = np.zeros(ev.n, dtype=np.int64)
+        powers = alpha ** np.arange(width + 1, dtype=float)  # alpha^0, alpha^1, ...
+        pw = np.ones(ev.n)                                  # peso di ogni riga: alpha^c
+        free = [True] * len(head)
         chosen = []
         for _ in range(width):
-            weight = (M @ (alpha ** counts)) / sizes        # media di alpha^c sulle righe
-            val = np.where(free, sc * weight, -1.0)
-            j = int(np.argmax(val))
-            chosen.append(j)
-            free[j] = False
-            counts[rows[j]] += 1
+            best, bj = -1.0, -1
+            for j in range(len(head)):
+                if not free[j]:
+                    continue
+                if sc[j] <= best:                           # non puo' piu' vincere
+                    break
+                if rows[j] is None:
+                    rows[j] = ev.rows(head[j])
+                r = rows[j]
+                # media di alpha^c sulle righe (somma in ordine, come la versione
+                # con la matrice sparsa)
+                w = (float(np.cumsum(pw[r])[-1]) if len(r) else 0.0) / max(len(r), 1)
+                v = sc[j] * w
+                if v > best:
+                    best, bj = v, j
+            chosen.append(bj)
+            free[bj] = False
+            counts[rows[bj]] += 1
+            pw[rows[bj]] = powers[counts[rows[bj]]]
         beam = [head[j] for j in chosen]
         rest = [head[j] for j in range(len(head)) if free[j]] + tail
         return beam, rest

@@ -1,0 +1,7 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+census_kdd_A30,Random rows,unione,30.21934304199931,21.840158332999636,0.400604248046875,,358,359,99.72144846796657,100.0,,"campioni=7001, frequenti=None, importanti_trovati=358, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A30,Beam search,unione,21.532474708000336,9.748741915999744,0.845123291015625,16947.0,359,359,100.0,100.0,,"passi=325, valutazioni=358092, frequenti=16947, riserva=14039, fermato_da=pazienza"
+census_kdd_A30,MCTS,unione,71.52522770799987,62.807040708000386,0.88525390625,91627.0,354,359,98.60724233983287,80.0,,"iterazioni=43063, valutazioni=917185, nodi=24356, frequenti=91627, fermato_da=pazienza"
+census_kdd_A37,Random rows,unione,53.06956637500025,43.88594741599991,0.45318603515625,,351,352,99.7159090909091,100.0,,"campioni=11415, frequenti=None, importanti_trovati=351, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A37,Beam search,unione,33.289404499999364,17.43329341699973,1.1371917724609375,28370.0,352,352,100.0,100.0,,"passi=363, valutazioni=483577, frequenti=28370, riserva=24947, fermato_da=pazienza"
+census_kdd_A37,MCTS,unione,34.645120416999816,13.106768792000366,0.5977783203125,46431.0,274,352,77.8409090909091,70.0,,"iterazioni=9617, valutazioni=357865, nodi=6788, frequenti=46431, fermato_da=pazienza"

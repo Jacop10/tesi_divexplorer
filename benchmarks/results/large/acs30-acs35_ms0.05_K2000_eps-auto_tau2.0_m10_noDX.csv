@@ -1,0 +1,7 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A30,Random rows,unione,159.12608358299985,155.14176550000047,0.218170166015625,,7210,7334,98.30924461412599,100.0,,"campioni=78618, frequenti=None, importanti_trovati=7210, fermato_da=pazienza, evaluation=matrix, output=important"
+acs_A30,Beam search,unione,205.30750066699966,197.22133195900005,5.551513671875,347958.0,7155,7334,97.55931278974639,100.0,,"passi=4984, valutazioni=3009809, frequenti=347958, riserva=300735, fermato_da=pazienza"
+acs_A30,MCTS,unione,204.50145166699986,199.66634662499928,3.4769287109375,375340.0,3757,7334,51.22716116716662,100.0,,"iterazioni=330002, valutazioni=3664079, nodi=128344, frequenti=375340, fermato_da=pazienza"
+acs_A35,Random rows,unione,318.82284274999984,314.6214611250007,0.2396240234375,,7174,7433,96.5155388133997,100.0,,"campioni=149494, frequenti=None, importanti_trovati=7174, fermato_da=pazienza, evaluation=matrix, output=important"
+acs_A35,Beam search,unione,281.06915687499986,270.04408370799956,7.0074615478515625,466892.0,7095,7433,95.45271088389615,100.0,,"passi=5199, valutazioni=3850786, frequenti=466892, riserva=417461, fermato_da=pazienza"
+acs_A35,MCTS,unione,30.047751291999703,28.034089999999196,0.6563873291015625,79555.0,1735,7433,23.341853894793488,60.0,,"iterazioni=40378, valutazioni=554171, nodi=22931, frequenti=79555, fermato_da=pazienza"

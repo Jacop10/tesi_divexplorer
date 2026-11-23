@@ -1,0 +1,3 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+synthetic_A25,DivExplorer,DivExplorer,256.38159083300025,256.38159083300025,0.881683349609375,127456,114,114,100.0,100.0,0,
+synthetic_A25,Beam search,DivExplorer,9.652653999999984,1.5282579580002675,0.3621368408203125,6164,114,114,100.0,100.0,0,"passi=208, valutazioni=105278, frequenti=6164, riserva=4049, fermato_da=pazienza"

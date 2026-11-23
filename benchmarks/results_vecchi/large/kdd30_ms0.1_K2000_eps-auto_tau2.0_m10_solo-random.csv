@@ -1,0 +1,3 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+census_kdd_A30,DivExplorer,DivExplorer,95.39137970800039,95.39137970800039,9.231857299804688,7938228.0,124,124,100.0,100.0,0,
+census_kdd_A30,Random rows,DivExplorer,12.072341332999713,3.6830572500002745,0.29461669921875,,124,124,100.0,100.0,0,"campioni=2764, frequenti=None, importanti_trovati=124, fermato_da=pazienza, evaluation=matrix, output=important"

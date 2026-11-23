@@ -1,0 +1,21 @@
+dataset,algoritmo,tempo_s,t_ultimo_s,frequenti,frequenti_su,importanti,importanti_su,recall_%,top10_%,falsi,max_diff_div,note
+synthetic_A15,DivExplorer,9.489516457999912,9.489516457999912,12323.0,12323,113,113,100.0,100.0,0,0.0,
+synthetic_A15,Random rows,2.7953394170000365,0.6274587499999598,,12323,113,113,100.0,100.0,0,0.0,"campioni=2508, frequenti=None, importanti_trovati=113, fermato_da=pazienza, evaluation=matrix, output=important"
+synthetic_A15,Beam search,3.7022819999999683,0.1737903749999532,3503.0,12323,113,113,100.0,100.0,0,0.0,"passi=208, valutazioni=47502, frequenti=3503, riserva=1485, fermato_da=pazienza"
+synthetic_A15,MCTS,3.733335000000011,2.4101590419999184,10004.0,12323,109,113,96.46017699115045,60.0,0,0.0,"iterazioni=13012, valutazioni=59301, nodi=5535, frequenti=10004, fermato_da=pazienza"
+synthetic_A20,DivExplorer,61.635304250000104,61.635304250000104,45489.0,45489,115,115,100.0,100.0,0,0.0,
+synthetic_A20,Random rows,4.2199890409999625,1.7499567080000134,,45489,115,115,100.0,100.0,0,0.0,"campioni=3452, frequenti=None, importanti_trovati=115, fermato_da=pazienza, evaluation=matrix, output=important"
+synthetic_A20,Beam search,5.51392891699993,0.2713066669999762,4758.0,45489,115,115,100.0,100.0,0,0.0,"passi=208, valutazioni=75455, frequenti=4758, riserva=2674, fermato_da=pazienza"
+synthetic_A20,MCTS,3.083646124999973,1.742784874999984,10069.0,45489,93,115,80.8695652173913,40.0,0,0.0,"iterazioni=8506, valutazioni=40002, nodi=4237, frequenti=10069, fermato_da=pazienza"
+acs_A15,DivExplorer,2.458463959000028,2.458463959000028,21023.0,21023,258,258,100.0,100.0,0,0.0,
+acs_A15,Random rows,4.609953083999926,0.696625250000011,,21023,258,258,100.0,100.0,0,0.0,"campioni=2299, frequenti=None, importanti_trovati=258, fermato_da=pazienza, evaluation=matrix, output=important"
+acs_A15,Beam search,6.6071934590000865,1.5201528339999868,4035.0,21023,254,258,98.44961240310077,100.0,0,0.0,"passi=294, valutazioni=81063, frequenti=4035, riserva=1782, fermato_da=pazienza"
+acs_A15,MCTS,5.08500479199995,2.6692302089999203,8251.0,21023,258,258,100.0,100.0,0,0.0,"iterazioni=9329, valutazioni=86194, nodi=3864, frequenti=8251, fermato_da=pazienza"
+acs_A20,DivExplorer,9.963461457999983,9.963461457999983,299205.0,299205,975,975,100.0,100.0,0,0.0,
+acs_A20,Random rows,10.098383665999904,6.094939457999999,,299205,975,975,100.0,100.0,0,0.0,"campioni=4991, frequenti=None, importanti_trovati=975, fermato_da=pazienza, evaluation=matrix, output=important"
+acs_A20,Beam search,14.331325333999985,9.360646125000017,18599.0,299205,957,975,98.15384615384616,100.0,0,0.0,"passi=633, valutazioni=244529, frequenti=18599, riserva=13294, fermato_da=pazienza"
+acs_A20,MCTS,27.52815920799992,24.29298370799995,48997.0,299205,827,975,84.82051282051282,100.0,0,0.0,"iterazioni=46723, valutazioni=441475, nodi=18571, frequenti=48997, fermato_da=pazienza"
+airbnb,DivExplorer,14.828076709000015,14.828076709000015,191986.0,191986,20420,20420,100.0,100.0,0,0.0,
+airbnb,Random rows,53.51284445799979,51.81698208299986,,191986,20297,20420,99.39764936336924,100.0,0,7.37188088351104e-14,"campioni=67778, frequenti=None, importanti_trovati=20297, fermato_da=pazienza, evaluation=matrix, output=important"
+airbnb,Beam search,72.28753087500013,69.3892668750002,100242.0,191986,19741,20420,96.67482859941234,100.0,0,9.681144774731365e-14,"passi=5411, valutazioni=2785891, frequenti=100242, riserva=55723, fermato_da=pazienza"
+airbnb,MCTS,257.9789572499999,255.5221171249998,184888.0,191986,20331,20420,99.564152791381,100.0,0,9.681144774731365e-14,"iterazioni=827014, valutazioni=8222360, nodi=169378, frequenti=184888, fermato_da=pazienza"

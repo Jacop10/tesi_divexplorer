@@ -1,0 +1,2 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A20,Random rows,unione,37.804665958999976,34.022382624999864,0.1499481201171875,,3334,3334,100.0,100.0,,"campioni=19764, frequenti=None, importanti_trovati=3334, fermato_da=pazienza, evaluation=matrix, output=important"

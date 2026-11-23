@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+hmda_NY2022_A30,DivExplorer,DivExplorer,274.1800491670001,274.1800491670001,3.713653564453125,335532.0,256,256,100.0,100.0,0,
+hmda_NY2022_A30,Random rows,DivExplorer,22.256692582999904,9.060489165999797,0.51202392578125,,256,256,100.0,100.0,0,"campioni=3250, frequenti=None, importanti_trovati=256, fermato_da=pazienza, evaluation=matrix, output=important"
+hmda_NY2022_A30,Beam search,DivExplorer,222.605577584,178.89332716699982,0.42864990234375,2942.0,105,256,41.015625,50.0,0,"passi=343, valutazioni=237222, frequenti=2942, riserva=1223, fermato_da=budget"
+hmda_NY2022_A30,MCTS,DivExplorer,60.885099750000336,59.277375750000374,0.3673858642578125,3681.0,212,256,82.8125,100.0,0,"iterazioni=26957, valutazioni=61240, frequenti=3681, fermato_da=pazienza"

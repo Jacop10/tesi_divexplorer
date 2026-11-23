@@ -1,5 +1,5 @@
 dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
-airbnb,DivExplorer,DivExplorer,14.775987999999415,14.775987999999415,0.491455078125,191986.0,142,142,100.0,100.0,0,
-airbnb,Random rows,DivExplorer,2.476300457999969,1.029867250001189,0.11358642578125,,142,142,100.0,100.0,0,"campioni=3360, frequenti=None, importanti_trovati=142, fermato_da=pazienza, evaluation=matrix, output=important"
-airbnb,Beam search,DivExplorer,6.003532042001098,3.0703564579998783,0.3776397705078125,4865.0,94,142,66.19718309859155,70.0,0,"passi=382, valutazioni=209248, frequenti=4865, riserva=1814, fermato_da=pazienza"
-airbnb,MCTS,DivExplorer,5.619756165999206,3.1006341659995087,0.17236328125,14341.0,137,142,96.47887323943662,70.0,0,"iterazioni=8567, valutazioni=103363, nodi=5886, frequenti=14341, fermato_da=pazienza"
+airbnb,DivExplorer,DivExplorer,15.125965291000284,15.125965291000284,0.479278564453125,191986.0,142,142,100.0,100.0,0,
+airbnb,Random rows,DivExplorer,2.625186500000382,1.118142500000431,0.107940673828125,,142,142,100.0,100.0,0,"campioni=3360, frequenti=None, importanti_trovati=142, fermato_da=pazienza, evaluation=matrix, output=important"
+airbnb,Beam search,DivExplorer,4.096081500000764,1.6275734160008142,0.318084716796875,5218.0,128,142,90.14084507042253,100.0,0,"passi=326, valutazioni=185436, frequenti=5218, riserva=2520, fermato_da=pazienza"
+airbnb,MCTS,DivExplorer,4.322594207999828,2.3655776670002524,0.1641693115234375,14341.0,137,142,96.47887323943662,70.0,0,"iterazioni=8567, valutazioni=103363, nodi=5886, frequenti=14341, fermato_da=pazienza"

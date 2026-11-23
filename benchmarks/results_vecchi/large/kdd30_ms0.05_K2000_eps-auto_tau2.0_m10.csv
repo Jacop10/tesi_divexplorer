@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+census_kdd_A30,DivExplorer,unione,,,,,,,,,,"crash (codice -9, memoria esaurita?)"
+census_kdd_A30,Random rows,unione,30.46522966700013,21.926981833000355,0.29571533203125,,358.0,358.0,100.0,100.0,,"campioni=7001, frequenti=None, importanti_trovati=358, fermato_da=pazienza, evaluation=matrix, output=important"
+census_kdd_A30,Beam search,unione,136.84057929200026,78.98389399999996,0.4181060791015625,2752.0,113.0,358.0,31.564245810055866,60.0,,"passi=446, valutazioni=263368, frequenti=2752, riserva=927, fermato_da=pazienza"
+census_kdd_A30,MCTS,unione,98.98983779199989,92.01050820799992,0.361785888671875,9898.0,215.0,358.0,60.055865921787706,60.0,,"iterazioni=26292, valutazioni=189722, frequenti=9898, fermato_da=pazienza"

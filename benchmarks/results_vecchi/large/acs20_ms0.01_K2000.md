@@ -1,0 +1,6 @@
+| Dataset   | Algoritmo   | Riferimento   |   Tempo (s) |   Ultimo importante (s) |   Memoria (GB) |   Frequenti | Importanti   |   Recall T_min (%) |   Top-10 (%) |   Falsi |
+|:----------|:------------|:--------------|------------:|------------------------:|---------------:|------------:|:-------------|-------------------:|-------------:|--------:|
+| acs_A20   | DivExplorer | DivExplorer   |      128.04 |                  128.04 |           7.16 |     7223192 | 6873/6873    |              100   |          100 |       0 |
+| acs_A20   | Random rows | DivExplorer   |       67.68 |                   58.25 |           2.26 |     2100727 | 6837/6873    |               99.5 |          100 |       0 |
+| acs_A20   | Beam search | DivExplorer   |       12.11 |                    0.78 |           0.15 |        3789 | 275/6873     |                4   |            0 |       0 |
+| acs_A20   | MCTS        | DivExplorer   |       25.36 |                   23.4  |           0.21 |       11691 | 848/6873     |               12.3 |           40 |       0 |

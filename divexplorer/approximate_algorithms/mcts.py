@@ -103,10 +103,10 @@ def mcts(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05, c=math.s
                 break
             item = int(ev.row_items[r, a])
             J2 = J | {item}
-            rows2 = rows[ev.row_items[rows, a] == item]
+            rows2 = rows[ev.cols[a][rows] == item]
             s = ev.cache.get(J2)
             if s is None:
-                s = ev.W[rows2].sum(axis=0)
+                s = ev.row_stats(rows2)
                 ev.cache[J2] = s
                 ev.evaluations += 1
             if not register(J2, s):
@@ -136,12 +136,17 @@ def mcts(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05, c=math.s
         path = [root]
         node = root
         while not node.untried and node.children:
-            alive = [ch for ch in node.children if not ch.dead]
-            if not alive:
+            # figlio vivo con UCB piu' alto (a parita', il primo)
+            L = math.log(max(node.N, 1))
+            best_ch, best_v = None, -math.inf
+            for ch in node.children:
+                if not ch.dead:
+                    v = ch.M + c * math.sqrt(L / max(ch.N, 1))
+                    if v > best_v:
+                        best_ch, best_v = ch, v
+            if best_ch is None:
                 break
-            parent = node
-            node = max(alive, key=lambda ch: ch.M
-                       + c * math.sqrt(math.log(max(parent.N, 1)) / max(ch.N, 1)))
+            node = best_ch
             if node.untried is None:
                 expand_children(node)
             path.append(node)

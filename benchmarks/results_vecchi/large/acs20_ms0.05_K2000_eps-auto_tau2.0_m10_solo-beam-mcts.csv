@@ -1,0 +1,4 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A20,DivExplorer,DivExplorer,9.1955710000002,9.1955710000002,0.714935302734375,299205,975,975,100.0,100.0,0,
+acs_A20,Beam search,DivExplorer,60.12175699999989,33.35573129199997,1.1713409423828125,15771,328,975,33.64102564102564,100.0,0,"passi=1822, valutazioni=565747, frequenti=15771, riserva=2553, fermato_da=budget"
+acs_A20,MCTS,DivExplorer,60.20754762499996,58.51559491599983,0.4786834716796875,40916,725,975,74.35897435897436,100.0,0,"iterazioni=41039, valutazioni=401387, nodi=17674, frequenti=40916, fermato_da=tempo"

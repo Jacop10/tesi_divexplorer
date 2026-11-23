@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+airbnb,DivExplorer,DivExplorer,15.161690875000204,15.161690875000204,0.4791259765625,191986.0,1635,1635,100.0,100.0,0,
+airbnb,Random rows,DivExplorer,6.915556792000189,5.437758084000052,0.098968505859375,,1631,1635,99.75535168195718,100.0,0,"campioni=9210, frequenti=None, importanti_trovati=1631, fermato_da=pazienza, evaluation=matrix, output=important"
+airbnb,Beam search,DivExplorer,8.239200957999856,3.048775082999782,0.1704864501953125,2388.0,250,1635,15.290519877675841,90.0,0,"passi=300, valutazioni=117706, frequenti=2388, riserva=792, fermato_da=pazienza"
+airbnb,MCTS,DivExplorer,69.78171375000011,69.09362266700009,0.7852783203125,47276.0,1465,1635,89.60244648318043,90.0,0,"iterazioni=263383, valutazioni=820582, frequenti=47276, fermato_da=tempo"

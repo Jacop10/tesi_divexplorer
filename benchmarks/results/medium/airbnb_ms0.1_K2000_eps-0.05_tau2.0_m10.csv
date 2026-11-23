@@ -1,5 +1,5 @@
 dataset,algoritmo,tempo_s,t_ultimo_s,frequenti,frequenti_su,importanti,importanti_su,recall_%,top10_%,falsi,max_diff_div,note
-airbnb,DivExplorer,4.798806957999659,4.798806957999659,23217.0,23217,38,38,100.0,100.0,0,0.0,
-airbnb,Random rows,1.784139999999752,0.21082225000009203,,23217,38,38,100.0,100.0,0,5.417888360170764e-14,"campioni=2208, frequenti=None, importanti_trovati=38, fermato_da=pazienza, evaluation=matrix, output=important"
-airbnb,Beam search,6.259408709000127,1.6567260000001625,3126.0,23217,38,38,100.0,100.0,0,9.681144774731365e-14,"passi=250, valutazioni=146751, frequenti=3126, riserva=1105, fermato_da=pazienza"
-airbnb,MCTS,5.352070082999489,2.051701417000004,6368.0,23217,38,38,100.0,100.0,0,9.681144774731365e-14,"iterazioni=7141, valutazioni=99724, nodi=4096, frequenti=6368, fermato_da=pazienza"
+airbnb,DivExplorer,4.434250499999962,4.434250499999962,23217.0,23217,38,38,100.0,100.0,0,0.0,
+airbnb,Random rows,1.6314988750000339,0.20502983300002597,,23217,38,38,100.0,100.0,0,5.417888360170764e-14,"campioni=2208, frequenti=None, importanti_trovati=38, fermato_da=pazienza, evaluation=matrix, output=important"
+airbnb,Beam search,3.4376289169999836,0.3021150829999897,2644.0,23217,38,38,100.0,100.0,0,9.681144774731365e-14,"passi=201, valutazioni=118783, frequenti=2644, riserva=1014, fermato_da=pazienza"
+airbnb,MCTS,4.016708749999907,1.505897332999666,6368.0,23217,38,38,100.0,100.0,0,9.681144774731365e-14,"iterazioni=7141, valutazioni=99724, nodi=4096, frequenti=6368, fermato_da=pazienza"

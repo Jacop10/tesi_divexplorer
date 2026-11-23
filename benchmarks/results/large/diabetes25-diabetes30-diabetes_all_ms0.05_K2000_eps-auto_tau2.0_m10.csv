@@ -1,0 +1,13 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+diabetes_A25,DivExplorer,DivExplorer,57.646289750000506,57.646289750000506,1.00531005859375,208929.0,25,25,100.0,100.0,0,
+diabetes_A25,Random rows,DivExplorer,4.4544175000000905,0.6021504170003027,0.1980438232421875,,25,25,100.0,100.0,0,"campioni=2191, frequenti=None, importanti_trovati=25, fermato_da=pazienza, evaluation=matrix, output=important"
+diabetes_A25,Beam search,DivExplorer,6.103348040999663,0.44698741600041103,0.390899658203125,3992.0,25,25,100.0,100.0,0,"passi=201, valutazioni=184854, frequenti=3992, riserva=2242, fermato_da=pazienza"
+diabetes_A25,MCTS,DivExplorer,3.7631308330001048,0.8299226250001084,0.2252960205078125,8870.0,24,25,96.0,100.0,0,"iterazioni=5900, valutazioni=125754, nodi=4011, frequenti=8870, fermato_da=pazienza"
+diabetes_A30,DivExplorer,DivExplorer,204.4817305839997,204.4817305839997,7.6082916259765625,4452189.0,26,26,100.0,100.0,0,
+diabetes_A30,Random rows,DivExplorer,6.211239083000692,2.103144667000379,0.215423583984375,,26,26,100.0,100.0,0,"campioni=2903, frequenti=None, importanti_trovati=26, fermato_da=pazienza, evaluation=matrix, output=important"
+diabetes_A30,Beam search,DivExplorer,6.938760250000087,0.5899134169994795,0.4284210205078125,4323.0,26,26,100.0,100.0,0,"passi=201, valutazioni=200217, frequenti=4323, riserva=2671, fermato_da=pazienza"
+diabetes_A30,MCTS,DivExplorer,7.278411249999408,2.978951000000052,0.268798828125,22362.0,26,26,100.0,100.0,0,"iterazioni=7815, valutazioni=170258, nodi=6046, frequenti=22362, fermato_da=pazienza"
+diabetes_Aall,DivExplorer,DivExplorer,1436.1972820830006,1436.1972820830006,9.253982543945312,34370104.0,28,28,100.0,100.0,0,
+diabetes_Aall,Random rows,DivExplorer,6.472084999999424,2.168424874998891,0.22906494140625,,28,28,100.0,100.0,0,"campioni=2867, frequenti=None, importanti_trovati=28, fermato_da=pazienza, evaluation=matrix, output=important"
+diabetes_Aall,Beam search,DivExplorer,6.927918166999007,0.6926096669994877,0.51605224609375,4989.0,28,28,100.0,100.0,0,"passi=201, valutazioni=209810, frequenti=4989, riserva=3290, fermato_da=pazienza"
+diabetes_Aall,MCTS,DivExplorer,8.250556790999326,1.8914039159990352,0.283294677734375,27117.0,28,28,100.0,100.0,0,"iterazioni=6939, valutazioni=167855, nodi=5473, frequenti=27117, fermato_da=pazienza"

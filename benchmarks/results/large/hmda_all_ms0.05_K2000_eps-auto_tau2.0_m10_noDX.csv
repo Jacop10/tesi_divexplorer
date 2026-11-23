@@ -1,0 +1,4 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+hmda_NY2022_Aall,Random rows,unione,86.2845532079998,69.48983179099992,0.9529571533203125,,273,274,99.63503649635037,100.0,,"campioni=10118, frequenti=None, importanti_trovati=273, fermato_da=pazienza, evaluation=matrix, output=important"
+hmda_NY2022_Aall,Beam search,unione,92.01833966699996,62.0643273339997,2.1108856201171875,38686.0,258,274,94.16058394160584,100.0,,"passi=528, valutazioni=818516, frequenti=38686, riserva=33562, fermato_da=pazienza"
+hmda_NY2022_Aall,MCTS,unione,115.97556112499979,101.07213587499973,1.025421142578125,98710.0,258,274,94.16058394160584,100.0,,"iterazioni=33755, valutazioni=488003, nodi=25421, frequenti=98710, fermato_da=pazienza"
