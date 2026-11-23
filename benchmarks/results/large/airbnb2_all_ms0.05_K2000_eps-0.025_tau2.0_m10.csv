@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+airbnb2_Aall,DivExplorer,unione,,,,,,,,,,timeout (1800 s)
+airbnb2_Aall,Random rows,unione,146.80343149999862,145.4757159159999,0.1466827392578125,,7323.0,7512.0,97.48402555910543,70.0,,"campioni=223624, frequenti=None, importanti_trovati=7323, fermato_da=pazienza, evaluation=matrix, output=important"
+airbnb2_Aall,Beam search,unione,63.19340374999956,59.30567920899921,5.93939208984375,222635.0,4961.0,7512.0,66.04100106496273,100.0,,"passi=2447, valutazioni=4306562, frequenti=222635, riserva=200526, fermato_da=pazienza"
+airbnb2_Aall,MCTS,unione,74.47064558300008,61.360707583000476,1.6338958740234375,452933.0,4207.0,7512.0,56.00372736954207,30.0,,"iterazioni=40837, valutazioni=1420796, nodi=28068, frequenti=452933, fermato_da=pazienza"
