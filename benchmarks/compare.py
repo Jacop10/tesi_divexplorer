@@ -150,6 +150,15 @@ def result_name(args, extra=""):
         parts.append(f"output-{args.output}")
     if args.evaluation != "matrix":
         parts.append(args.evaluation)
+    # parametri di beam search e MCTS: nel nome solo se diversi dal valore di default
+    # (cosi' i nomi dei risultati gia' fatti non cambiano)
+    for name, default, tag in [("K_beam", 200, "Kbeam"), ("K_mcts", 5000, "Kmcts"),
+                               ("beam_width", 10, "w"), ("alpha", 0.9, "alpha"),
+                               ("ucb_c", 2 ** 0.5, "c"), ("budget", None, "budget"),
+                               ("seed", 0, "seed")]:
+        v = getattr(args, name, default)
+        if v != default:
+            parts.append(f"{tag}{v:g}" if isinstance(v, float) else f"{tag}{v}")
     return "_".join(parts) + extra + ".csv"
 
 
