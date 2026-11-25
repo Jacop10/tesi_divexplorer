@@ -1,0 +1,7 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A20,DivExplorer,DivExplorer,9.459714292000001,9.459714292000001,0.7047119140625,299205,975,975,100.0,100.0,0,"risultato salvato, non rilanciato"
+acs_A20,MCTS,DivExplorer,13.200846540999919,11.251165624999885,0.3929290771484375,26132,757,975,77.64102564102564,100.0,0,"iterazioni=34644, valutazioni=337949, nodi=15900, frequenti=26132, fermato_da=pazienza"
+acs_A25,DivExplorer,DivExplorer,68.99353183300263,68.99353183300263,6.136322021484375,4275614,2673,2673,100.0,100.0,0,"risultato salvato, non rilanciato"
+acs_A25,MCTS,DivExplorer,21.39919558299971,19.232022000000143,0.603424072265625,44462,1280,2673,47.88627010849233,100.0,0,"iterazioni=53441, valutazioni=582758, nodi=21454, frequenti=44462, fermato_da=pazienza"
+synthetic_A25,DivExplorer,DivExplorer,249.28802720800002,249.28802720800002,0.886688232421875,127456,114,114,100.0,100.0,0,"risultato salvato, non rilanciato"
+synthetic_A25,MCTS,DivExplorer,2.8649152079997293,1.5247517919997335,0.2188720703125,13519,90,114,78.94736842105263,0.0,0,"iterazioni=9730, valutazioni=64207, nodi=6067, frequenti=13519, fermato_da=pazienza"

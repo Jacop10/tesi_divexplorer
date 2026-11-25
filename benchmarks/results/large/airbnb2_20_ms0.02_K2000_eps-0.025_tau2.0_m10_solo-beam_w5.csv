@@ -1,0 +1,3 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+airbnb2_A20,DivExplorer,DivExplorer,23.734996249997494,23.734996249997494,1.6171112060546875,868150,737,737,100.0,100.0,0,
+airbnb2_A20,Beam search,DivExplorer,2.5141588330006925,2.0760530830011703,0.4365997314453125,11398,531,737,72.04884667571234,100.0,0,"passi=1099, valutazioni=308524, frequenti=11398, riserva=6755, fermato_da=pazienza"

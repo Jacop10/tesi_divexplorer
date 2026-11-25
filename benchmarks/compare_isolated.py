@@ -14,7 +14,16 @@ Rispetto a compare.py:
   all'unione e' una stima per eccesso.
 Il processo figlio restituisce solo i sottogruppi importanti (non tutti i
 frequenti), cosi' anche con milioni di frequenti il passaggio dei dati e' leggero.
+
+Riuso di DivExplorer (--riusa-divexplorer): il risultato di DivExplorer (T_min,
+tempo, memoria) dipende solo da dataset, supporto minimo, tau ed eps. Ogni volta che
+DivExplorer finisce, il risultato viene salvato in benchmarks/data_cache/divexplorer/;
+con --riusa-divexplorer, se c'e' gia' un risultato per la stessa combinazione, lo si
+legge da li' invece di rilanciare DivExplorer. Serve per le prove sui parametri degli
+algoritmi (K, m, beam, MCTS), dove il riferimento non cambia. Tempo e memoria di
+DivExplorer nella tabella sono quelli della prova in cui e' stato lanciato davvero.
 """
+import pickle
 import multiprocessing as mp
 import os
 import queue
@@ -108,6 +117,12 @@ def run_isolated(method, df, attrs, outcome, kind, p, timeout):
     return out
 
 
+def _dx_cache_path(name, args, eps):
+    d = os.path.join(HERE, "data_cache", "divexplorer")
+    os.makedirs(d, exist_ok=True)
+    return os.path.join(d, f"{name}_ms{args.min_support}_tau{args.tau}_eps{eps:.6g}.pkl")
+
+
 def main(group, loaders, doc):
     import argparse
     p = argparse.ArgumentParser(description=doc,
@@ -117,6 +132,9 @@ def main(group, loaders, doc):
                    help="secondi massimi per ogni metodo (default 1800 = 30 minuti)")
     p.add_argument("--skip-divexplorer", action="store_true",
                    help="non lanciare DivExplorer (riferimento = unione dei metodi)")
+    p.add_argument("--riusa-divexplorer", action="store_true",
+                   help="usa il risultato di DivExplorer salvato da una prova precedente "
+                        "con stesso dataset, supporto, tau ed eps (se c'e')")
     args = p.parse_args()
 
     rows = []
@@ -136,7 +154,17 @@ def main(group, loaders, doc):
                   [KEY[a] for a in ["random", "beam", "mcts"] if a in args.algorithms]
         outs = {}
         for method in methods:
-            out = run_isolated(method, df, attrs, outcome, kind, params, args.timeout)
+            cache = _dx_cache_path(name, args, eps) if method == "DivExplorer" else None
+            if cache and args.riusa_divexplorer and os.path.exists(cache):
+                with open(cache, "rb") as f:
+                    out = pickle.load(f)
+                out["note"] = "risultato salvato, non rilanciato"
+                print(f"(DivExplorer dalla cache: {os.path.basename(cache)})", flush=True)
+            else:
+                out = run_isolated(method, df, attrs, outcome, kind, params, args.timeout)
+                if cache and "errore" not in out:
+                    with open(cache, "wb") as f:
+                        pickle.dump(out, f)
             outs[method] = out
             if "errore" in out:
                 print(f"{method:12s}: {out['errore']}", flush=True)

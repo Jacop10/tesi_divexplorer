@@ -1,0 +1,3 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+acs_A25,DivExplorer,DivExplorer,65.20601583299867,65.20601583299867,6.5844879150390625,4275614.0,2673,2673,100.0,100.0,0,
+acs_A25,Random rows,DivExplorer,84.58580545900259,68.97195508400182,0.1949005126953125,,2672,2673,99.96258885147775,100.0,0,"campioni=43104, frequenti=None, importanti_trovati=2672, fermato_da=pazienza, evaluation=matrix, output=important"

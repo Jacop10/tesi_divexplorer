@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+synthetic_A25,DivExplorer,DivExplorer,249.28802720800002,249.28802720800002,0.886688232421875,127456,114,114,100.0,100.0,0,
+synthetic_A25,MCTS,DivExplorer,3.817222208999965,2.3325355000000627,0.223785400390625,15729,89,114,78.0701754385965,0.0,0,"iterazioni=10234, valutazioni=67566, nodi=6432, frequenti=15729, fermato_da=pazienza"
+acs_A25,DivExplorer,DivExplorer,68.99353183300263,68.99353183300263,6.136322021484375,4275614,2673,2673,100.0,100.0,0,"risultato salvato, non rilanciato"
+acs_A25,MCTS,DivExplorer,63.676720290999924,59.9766873750001,1.0198211669921875,131852,2160,2673,80.8080808080808,100.0,0,"iterazioni=101032, valutazioni=1183473, nodi=43535, frequenti=131852, fermato_da=pazienza"

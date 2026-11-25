@@ -1,0 +1,5 @@
+dataset,algoritmo,riferimento,tempo_s,t_ultimo_s,mem_GB,frequenti,importanti,importanti_su,recall_%,top10_%,falsi,note
+diabetes_A30,DivExplorer,DivExplorer,208.38175029200102,208.38175029200102,7.8142852783203125,4452189.0,267,267,100.0,100.0,0,
+diabetes_A30,Random rows,DivExplorer,12.283888084000864,7.991617458999826,0.2199249267578125,,264,267,98.87640449438203,100.0,0,"campioni=5683, frequenti=None, importanti_trovati=264, fermato_da=pazienza, evaluation=matrix, output=important"
+diabetes_A30,Beam search,DivExplorer,9.092054082999312,2.931465832998583,0.5394439697265625,8753.0,253,267,94.7565543071161,100.0,0,"passi=291, valutazioni=300996, frequenti=8753, riserva=6312, fermato_da=pazienza"
+diabetes_A30,MCTS,DivExplorer,9.423996833000274,6.76304275000075,0.3007659912109375,25825.0,242,267,90.6367041198502,100.0,0,"iterazioni=11692, valutazioni=207436, nodi=8828, frequenti=25825, fermato_da=pazienza"
