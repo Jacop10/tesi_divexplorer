@@ -9,12 +9,11 @@ A ogni iterazione:
   2. espansione: si aggiunge un figlio frequente nuovo. La prima volta che la
      selezione arriva a un nodo si valutano INSIEME tutti i suoi figli (un solo
      passaggio sulle sue righe, Evaluator.extensions);
-  3. rollout GUIDATO DA UNA RIGA (come in Boley et al. e in random rows): si sceglie
-     a caso la direzione (+/-) e una riga del nuovo nodo con probabilita'
-     proporzionale al suo peso (booleano: outcome 1 per +, 0 per -; numerico:
-     y - min per +, max - y per -); poi si aggiungono uno alla volta, in ordine
-     casuale, i valori di quella riga sugli attributi non usati, finche' il
-     sottogruppo resta frequente (o si arriva alla lunghezza massima);
+  3. rollout CASUALE (come nel MCTS classico): dal nuovo nodo si aggiunge a ogni
+     passo una condizione scelta a caso (un attributo non ancora usato e un suo
+     valore), finche' il sottogruppo resta frequente (o si arriva alla lunghezza
+     massima). Un rollout guidato da una riga pesata (come in random rows) e' stato
+     provato e non ha dato vantaggi misurabili, quindi si usa quello classico;
   4. backpropagation: il premio (miglior |divergenza| significativa del rollout,
      normalizzata in [0, 1]) aggiorna visite e massimo di tutti i nodi del percorso.
 Lo stesso sottogruppo raggiunto in ordini diversi e' UN SOLO nodo (duplicati
@@ -48,9 +47,9 @@ def mcts(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05, c=math.s
     ev = Evaluator(df, attributes, outcome, kind)
     max_len = max_len or len(attributes)
     scale = 1.0 if kind == "bool" else float(np.ptp(ev.y)) or 1.0
-    y = ev.y
-    weights = ({+1: (y == 1).astype(float), -1: (y == 0).astype(float)} if kind == "bool"
-               else {+1: y - y.min(), -1: y.max() - y})
+    attr_items = [[] for _ in ev.attributes]     # item (valori) di ogni attributo
+    for i, a in enumerate(ev.item_attr):
+        attr_items[a].append(i)
     found, found_at, nodes = {}, {}, {}
     new_important = False                    # trovato un importante in questa iterazione?
 
@@ -86,22 +85,19 @@ def mcts(df, attributes, outcome, kind, min_support, tau=2.0, eps=0.05, c=math.s
         return abs(m["div"]) / scale if m["t"] >= tau else 0.0
 
     def rollout(J):
-        """Rollout guidato da una riga del sottogruppo J."""
+        """Rollout casuale: a ogni passo un attributo non ancora usato e un suo
+        valore, scelti a caso, finche' il sottogruppo resta frequente."""
         best = reward(J)
         rows = ev.rows(J)
         if len(J) >= max_len or len(rows) == 0:
             return best
-        d = +1 if rng.random() < 0.5 else -1
-        w = weights[d][rows]
-        r = rows[rng.choice(len(rows), p=w / w.sum())] if w.sum() > 0 else rng.choice(rows)
         used = {ev.item_attr[i] for i in J}
-        free = [a for a in range(len(ev.attributes))
-                if a not in used and ev.row_items[r, a] >= 0]
+        free = [a for a in range(len(ev.attributes)) if a not in used]
         rng.shuffle(free)
         for a in free:
             if len(J) >= max_len:
                 break
-            item = int(ev.row_items[r, a])
+            item = int(attr_items[a][rng.integers(len(attr_items[a]))])
             J2 = J | {item}
             rows2 = rows[ev.cols[a][rows] == item]
             s = ev.cache.get(J2)
